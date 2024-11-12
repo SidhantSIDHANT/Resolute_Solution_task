@@ -1,0 +1,49 @@
+/* Basic table styles */
+table {
+    width: 100%;
+  }
+  
+  /* Make the table scrollable on smaller screens */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
+  }
+  
+  @media (max-width: 768px) {
+    /* On small screens, we hide unnecessary columns like Actions and Edit */
+    .mat-column-actions, .mat-column-edit {
+      display: none;
+    }
+  
+    /* Adjust font size and padding for small screens */
+    table {
+      font-size: 14px;
+    }
+  
+    /* You can make the table more compact for small screens */
+    th.mat-header-cell, td.mat-cell {
+      padding: 8px;
+    }
+  }
+  
+  /* Optional: For very small screens (extra small devices like phones in portrait mode) */
+  @media (max-width: 480px) {
+    /* You can adjust the font size even more for extra small screens */
+    table {
+      font-size: 12px;
+    }
+  
+    th.mat-header-cell, td.mat-cell {
+      padding: 2px;
+    }
+
+    .mat-cell, .mat-footer-cell {
+        font-size: 10px !important;
+    }
+  
+    /* Adjust paginator to fit */
+    mat-paginator {
+      font-size: 12px;
+    }
+  }
+  

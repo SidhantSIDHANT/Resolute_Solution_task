@@ -1,0 +1,46 @@
+<section class="form-section">
+    <div class="container">
+        <h2 class="text-center p-4 bg-primary text-white mb-0">{{ isEditMode ? 'Edit User' : 'Add New User' }}</h2>
+
+        <form class="mx-auto w-50" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="Enter user's name">
+                <mat-error *ngIf="userFormControls['name']?.invalid && userFormControls['name']?.touched">Name is required and should be at least 3 characters
+                    long.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="Enter user's email">
+                <mat-error *ngIf="userFormControls['email']?.invalid && userFormControls['email']?.touched">
+                    Enter a valid email address.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="User">User</mat-option>
+                    <mat-option value="Admin">Admin</mat-option>
+                </mat-select>
+                <mat-error *ngIf="userFormControls['role']?.invalid && userFormControls['role']?.touched">Role is required.</mat-error>
+            </mat-form-field>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+              <div>
+                <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid" *ngIf="!isEditMode">
+                    Add User
+                 </button>
+                 <button mat-raised-button color="primary" type="button" [disabled]="userForm.invalid" *ngIf="isEditMode" (click)="updateUser()">
+                    Update User
+                 </button>
+              </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<app-user-list [user]="user" (editUserEvent)="editUser($event)" [updatedUser]="updatedUser" ></app-user-list>

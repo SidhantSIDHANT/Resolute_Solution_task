@@ -1,0 +1,56 @@
+<section id="table">
+    <div class="container">
+      <div class="user-list-container">
+        <!-- Add a wrapper to make the table scrollable on small screens -->
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource" matSort (matSortChange)="applySort($event)" class="w-100 mt-5">
+            
+            <!-- Define the columns -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+              <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef> Role </th>
+              <td mat-cell *matCellDef="let user"> {{ user.role }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-button color="accent" (click)="deleteUser(user)">Delete</button>
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> Edit </th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-button color="tan" (click)="edit(user)">Edit</button>
+              </td>
+            </ng-container>
+    
+            <!-- Header row -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- Data rows -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+  
+        <!-- Pagination controls -->
+        <mat-paginator [length]="users.length" [pageSize]="10" [pageSizeOptions]="[10]" (page)="handlePageEvent($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </section>
+  
