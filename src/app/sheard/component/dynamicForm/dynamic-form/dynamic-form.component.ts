@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Field } from 'src/app/sheard/model/field';
 import {
-  Field,
   FormBuilderService,
 } from 'src/app/sheard/service/form-builder.service';
 
