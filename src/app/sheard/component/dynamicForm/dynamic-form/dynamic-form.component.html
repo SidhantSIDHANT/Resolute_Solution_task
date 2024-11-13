@@ -1,6 +1,7 @@
-<section id="dynamicForm">
-    <div class="container">
-        <div class="row">
+<section id="dynamicForm" class="mt-5">
+    <div class="container ">
+    <h1 class="bg-primary mb-0 text-uppercase py-3 text-center text-white">Dynamic Form Builder </h1>
+        <div class="row dynamicFormBackground">
             <div class="col-12 col-md-6">
                 <button mat-button color="primary" class="btn-block"
                     (click)="addField({type: 'text', label: 'Text Input', placeholder: 'Enter text', name: 'field1', required: true})">
@@ -60,21 +61,21 @@
 
                             <div *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched"
                                 class="error">
-                                This field is required
+                                <p class="text-danger"> This field is required</p>
                             </div>
 
-                            <button class="mb-3" mat-raised-button color="accent" (click)="removeField(field.name)">Remove Field</button>
+                            <button class="mb-3" mat-raised-button color="accent"
+                                (click)="removeField(field.name)">Remove Field</button>
                         </div>
 
-                        <button mat-raised-button color="primary" type="submit">Submit</button>
+                        <button mat-raised-button color="primary" type="submit" [disabled]="isDisabled">Submit</button>
                     </form>
 
-                    <div *ngIf="successMessage" class="success-message">
+                    <div *ngIf="successMessage " class="text-success">
                         {{ successMessage }}
                     </div>
                 </div>
             </div>
-          
         </div>
     </div>
 </section>

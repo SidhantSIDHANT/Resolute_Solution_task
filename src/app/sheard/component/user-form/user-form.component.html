@@ -1,6 +1,6 @@
 <section class="form-section">
     <div class="container">
-        <h2 class="text-center p-4 bg-primary text-white mb-0">{{ isEditMode ? 'Edit User' : 'Add New User' }}</h2>
+        <h2 class="text-center text-uppercase p-4 bg-primary text-white mb-0">{{ isEditMode ? 'Edit User' : 'Add New User' }}</h2>
 
         <form class="mx-auto w-50" [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill" class="full-width">

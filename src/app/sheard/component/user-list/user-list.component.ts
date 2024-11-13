@@ -14,6 +14,8 @@ import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-list',
@@ -37,7 +39,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -86,21 +88,27 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
     this.sortDirection = event.direction;
   }
 
-  handlePageEvent(event: any): void {
-    this.dataSource.paginator = event;
-  }
-
   deleteUser(user: User): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.userService.deleteUser(user.id!);
-      this.users = this.userService.getUsers();
-      this.dataSource.data = this.users;
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.userService.deleteUser(user.id!);
+        this.users = this.userService.getUsers();
+        this.dataSource.data = this.users;
+      } else {
+        console.log('Deletion canceled');
+      }
+    });
   }
 
   edit(user: User): void {
-    if (confirm('Are you sure you want to Edit this user?')) {
-      this.editUserEvent.emit(user);
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    dialogRef.afterClosed().subscribe((result : boolean)=>{
+      if(result){
+        this.editUserEvent.emit(user);
+      }else{
+        console.log('Edit canceled');
+      }
+    });
   }
 }

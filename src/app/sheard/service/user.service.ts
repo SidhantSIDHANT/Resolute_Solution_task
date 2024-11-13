@@ -20,9 +20,6 @@ export class UserService {
   }
 
   editUser(updatedUser: User) {
-    console.log(updatedUser);
-
-    console.log(this.users);
     this.users.forEach((element) => {
       if (element.id === updatedUser.id) {
         const index = this.users.findIndex((u) => u.id === updatedUser.id);
@@ -30,9 +27,6 @@ export class UserService {
         this.updateLocalStorage();
       }
     });
-    // if (index !== -1) {
-    //
-    // }
   }
 
   updateUser(user : User): void{

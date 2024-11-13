@@ -16,7 +16,7 @@ export interface Field {
 export class FormBuilderService {
   createFieldControl(field: Field): FormControl {
     const validators = field.required ? [Validators.required] : [];
-    return new FormControl('', validators);
+    return new FormControl("", validators);
   }
 
   createFormGroup(fields: Field[]): FormGroup {

@@ -21,6 +21,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DynamicFormComponent } from './sheard/component/dynamicForm/dynamic-form/dynamic-form.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ConfirmationDialogComponent } from './sheard/component/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { DynamicFormComponent } from './sheard/component/dynamicForm/dynamic-for
     UserFormComponent,
     SortPipe,
     DynamicFormComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { DynamicFormComponent } from './sheard/component/dynamicForm/dynamic-for
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
-    DragDropModule  
+    DragDropModule,
+    MatSnackBarModule  
 
   ],
   providers: [],
