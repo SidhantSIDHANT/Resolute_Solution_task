@@ -27,7 +27,6 @@
                 <mat-error *ngIf="userFormControls['role']?.invalid && userFormControls['role']?.touched">Role is required.</mat-error>
             </mat-form-field>
 
-            <!-- Submit Button -->
             <div class="form-actions">
               <div>
                 <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid" *ngIf="!isEditMode">
@@ -39,7 +38,6 @@
               </div>
             </div>
         </form>
-
     </div>
 </section>
 

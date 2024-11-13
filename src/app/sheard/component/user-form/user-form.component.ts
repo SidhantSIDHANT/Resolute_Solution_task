@@ -30,7 +30,7 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  get userFormControls(){
+  get userFormControls() {
     return this.userForm.controls;
   }
 

@@ -27,15 +27,13 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
   dataSource: MatTableDataSource<User>;
   users: User[] = [];
   
-  // For sorting
-  sortBy: string = 'name';  // Default sorting by name
-  sortDirection: string = 'asc'; // Default sorting direction
+  sortBy: string = 'name';  
+  sortDirection: string = 'asc'; 
 
   @Input() user!: User;
   @Input('updatedUser') updatedUser!: User;
   @Output() editUserEvent: EventEmitter<User> = new EventEmitter<User>();
 
-  // Access to paginator
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
