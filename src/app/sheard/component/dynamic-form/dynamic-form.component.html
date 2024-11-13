@@ -1,11 +1,11 @@
 <section id="dynamicForm" class="mt-5">
     <div class="container">
-      <h2 class="bg-primary mb-0 text-uppercase py-3 text-center text-white">
-        Dynamic Form Builder
-      </h2>
-      <div class="row dynamicFormBackground">
-        <div class="col-12 col-md-6">
-          <button mat-button color="primary" class="btn-block" (click)="
+        <h2 class="bg-primary mb-0 text-uppercase py-3 text-center text-white">
+            Dynamic Form Builder
+        </h2>
+        <div class="row dynamicFormBackground">
+            <div class="col-12 col-md-6">
+                <button mat-button color="primary" class="btn-block" (click)="
             addField({
               type: 'text',
               label: 'Text Input',
@@ -14,9 +14,9 @@
               required: true
             })
           ">
-            Add Text Field
-          </button>
-          <button mat-button color="primary" class="btn-block" (click)="
+                    Add Text Field
+                </button>
+                <button mat-button color="primary"  class="btn-block" (click)="
             addField({
               type: 'select',
               label: 'Dropdown',
@@ -26,9 +26,9 @@
               options: ['Option 1', 'Option 2']
             })
           ">
-            Add Dropdown
-          </button>
-          <button mat-button color="primary" class="btn-block" (click)="
+                    Add Dropdown
+                </button>
+                <button mat-button color="primary" class="btn-block" (click)="
             addField({
               type: 'checkbox',
               label: 'Checkbox',
@@ -37,10 +37,10 @@
               required: false
             })
           ">
-            Add Checkbox
-          </button>
-  
-          <button mat-button color="primary" class="btn-block" (click)="
+                    Add Checkbox
+                </button>
+
+                <button mat-button color="primary" class="btn-block" (click)="
             addRadioField(
               'Select Gender',
               'gender',
@@ -48,74 +48,70 @@
               true
             )
           ">
-            Add Radio Button (Gender)
-          </button>
-        </div>
-  
-        <div class="col-12 col-md-6">
-          <div class="form-container">
-            <form [formGroup]="form" (ngSubmit)="submitForm()">
-              <div *ngFor="let field of fields" class="form-field">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>{{ field.label }}</mat-label>
-  
-                  <ng-container [ngSwitch]="field.type">
-  
-                    <!-- Text Input -->
-                    <input *ngSwitchCase="'text'"
-                           matInput
-                           formControlName="{{ field.name }}"
-                           [placeholder]="field.placeholder" />
-  
-                    <textarea *ngSwitchCase="'textarea'"
-                              matInput
-                              formControlName="{{ field.name }}"
-                              [placeholder]="field.placeholder"></textarea>
-  
-                    <mat-select *ngSwitchCase="'select'"
-                                formControlName="{{ field.name }}">
-                      <mat-option *ngFor="let option of field.options" [value]="option">
-                        {{ option }}
-                      </mat-option>
-                    </mat-select>
-  
-                    <mat-checkbox *ngSwitchCase="'checkbox'"
-                                  formControlName="{{ field.name }}">
-                      {{ field.label }}
-                    </mat-checkbox>
-  
-                    <mat-radio-group *ngSwitchCase="'radio'"
-                                    formControlName="{{ field.name }}">
-                      <mat-radio-button *ngFor="let option of field.options"
-                                       [value]="option">
-                        {{ option }}
-                      </mat-radio-button>
-                    </mat-radio-group>
-  
-                  </ng-container>
-
-                  <div *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched" class="error">
-                    <p class="text-danger">This field is required</p>
-                  </div>
-  
-                </mat-form-field>
-  
-                <button class="mb-3" mat-raised-button color="accent" (click)="removeField(field.name)">
-                  Remove Field
+                    Add Radio Button (Gender)
                 </button>
-              </div>
-  
-              <button mat-raised-button color="primary" type="submit" *ngIf="!isDisabled">
-                Submit
-              </button>
-            </form>
-  
-            <div *ngIf="successMessage" class="text-success">
-              {{ successMessage }}
             </div>
-          </div>
+            <div class="col-12 col-md-6">
+                <div class="form-container">
+                    <form [formGroup]="form" (ngSubmit)="submitForm()">
+                        <div *ngFor="let field of fields" class="form-field">
+                            <label><b>{{ field.label }}</b></label>
+
+                            <ng-container [ngSwitch]="field.type">
+                                <div class="form-group">
+                                    <input *ngSwitchCase="'text'" class="form-control"
+                                        formControlName="{{ field.name }}" [placeholder]="field.placeholder" />
+                                </div>  
+
+                                <div class="form-group">
+                                    <textarea *ngSwitchCase="'textarea'" formControlName="{{ field.name }}"
+                                        [placeholder]="field.placeholder" class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <select *ngSwitchCase="'select'" formControlName="{{ field.name }}"
+                                        class="form-control">
+                                        <option *ngFor="let option of field.options" [value]="option">
+                                            {{ option }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input *ngSwitchCase="'checkbox'" type="checkbox"
+                                        formControlName="{{ field.name }}" />
+                                </div>
+
+                                <div *ngSwitchCase="'radio'">
+                                    <label *ngFor="let option of field.options">
+                                        <input type="radio" formControlName="{{ field.name }}" [value]="option" />
+                                        {{ option }}
+                                    </label>
+                                </div>
+                            </ng-container>
+
+                            <div *ngIf="
+                  form.controls[field.name].invalid &&
+                  form.controls[field.name].touched
+                " class="error">
+                                <p class="text-danger">This field is required</p>
+                            </div>
+
+                            <button class="mb-3" mat-raised-button color="accent" (click)="removeField(field.name)">
+                                Remove Field
+                            </button>
+                        </div>
+
+                        <button mat-raised-button color="primary" type="submit" *ngIf="!isDisabled">
+                            Submit
+                        </button>
+                    </form>
+
+                    <div *ngIf="successMessage" class="text-success">
+                        {{ successMessage }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-  
+</section>
