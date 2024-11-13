@@ -20,7 +20,7 @@ import { SortPipe } from './sheard/pipe/sort.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { DynamicFormComponent } from './sheard/component/dynamicForm/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from './sheard/component/dynamic-form/dynamic-form.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from './sheard/component/confirmation-dialog/confirmation-dialog.component';
 
