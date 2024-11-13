@@ -32,7 +32,6 @@ export class DynamicFormComponent implements OnInit {
   removeField(fieldName: string) {
     this.fields = this.fields.filter((field) => field.name !== fieldName);
     this.form = this.formBuilderService.createFormGroup(this.fields);
-    
   }
 
   get formControls(){
