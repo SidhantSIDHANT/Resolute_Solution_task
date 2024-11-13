@@ -12,11 +12,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {  ReactiveFormsModule } from '@angular/forms';
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserFormComponent } from './sheard/component/user-form/user-form.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { SortPipe } from './sheard/pipe/sort.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DynamicFormComponent } from './sheard/component/dynamicForm/dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import { SortPipe } from './sheard/pipe/sort.pipe';
     UserListComponent,
     UserFormComponent,
     SortPipe,
+    DynamicFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +44,13 @@ import { SortPipe } from './sheard/pipe/sort.pipe';
     BrowserAnimationsModule,
     MatSelectModule ,
     MatOptionModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    DragDropModule  
 
   ],
   providers: [],

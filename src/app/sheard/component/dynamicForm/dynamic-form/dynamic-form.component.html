@@ -1,0 +1,80 @@
+<section id="dynamicForm">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <button mat-button color="primary" class="btn-block"
+                    (click)="addField({type: 'text', label: 'Text Input', placeholder: 'Enter text', name: 'field1', required: true})">
+                    Add Text Field
+                </button>
+                <button mat-button color="primary" class="btn-block"
+                    (click)="addField({type: 'select', label: 'Dropdown', placeholder: '', name: 'dropdown', required: true, options: ['Option 1', 'Option 2']})">
+                    Add Dropdown
+                </button>
+                <button mat-button color="accent" class="btn-block"
+                    (click)="addField({type: 'checkbox', label: 'Checkbox', placeholder: '', name: 'checkbox', required: false})">
+                    Add Checkbox
+                </button>
+
+                <button mat-button color="warn" class="btn-block"
+                    (click)="addRadioField('Select Gender', 'gender', ['Male', 'Female', 'Other'], true)">
+                    Add Radio Button (Gender)
+                </button>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-container">
+                    <form [formGroup]="form" (ngSubmit)="submitForm()">
+                        <div *ngFor="let field of fields" class="form-field">
+                            <label>{{ field.label }}</label>
+
+                            <ng-container [ngSwitch]="field.type">
+                                <div class="form-group">
+                                    <input *ngSwitchCase="'text'" class="form-control"
+                                        formControlName="{{ field.name }}" [placeholder]="field.placeholder" />
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea *ngSwitchCase="'textarea'" formControlName="{{ field.name }}"
+                                        [placeholder]="field.placeholder" class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <select *ngSwitchCase="'select'" formControlName="{{ field.name }}"
+                                        class="form-control">
+                                        <option *ngFor="let option of field.options" [value]="option">{{ option }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input *ngSwitchCase="'checkbox'" type="checkbox"
+                                        formControlName="{{ field.name }}" />
+                                </div>
+
+                                <div *ngSwitchCase="'radio'">
+                                    <label *ngFor="let option of field.options">
+                                        <input type="radio" formControlName="{{ field.name }}" [value]="option" />
+                                        {{ option }}
+                                    </label>
+                                </div>
+                            </ng-container>
+
+                            <div *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched"
+                                class="error">
+                                This field is required
+                            </div>
+
+                            <button class="mb-3" mat-raised-button color="accent" (click)="removeField(field.name)">Remove Field</button>
+                        </div>
+
+                        <button mat-raised-button color="primary" type="submit">Submit</button>
+                    </form>
+
+                    <div *ngIf="successMessage" class="success-message">
+                        {{ successMessage }}
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</section>
