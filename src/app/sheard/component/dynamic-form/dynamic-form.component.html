@@ -67,13 +67,11 @@
                            formControlName="{{ field.name }}"
                            [placeholder]="field.placeholder" />
   
-                    <!-- Textarea -->
                     <textarea *ngSwitchCase="'textarea'"
                               matInput
                               formControlName="{{ field.name }}"
                               [placeholder]="field.placeholder"></textarea>
   
-                    <!-- Select Dropdown -->
                     <mat-select *ngSwitchCase="'select'"
                                 formControlName="{{ field.name }}">
                       <mat-option *ngFor="let option of field.options" [value]="option">
@@ -81,13 +79,11 @@
                       </mat-option>
                     </mat-select>
   
-                    <!-- Checkbox -->
                     <mat-checkbox *ngSwitchCase="'checkbox'"
                                   formControlName="{{ field.name }}">
                       {{ field.label }}
                     </mat-checkbox>
   
-                    <!-- Radio Buttons -->
                     <mat-radio-group *ngSwitchCase="'radio'"
                                     formControlName="{{ field.name }}">
                       <mat-radio-button *ngFor="let option of field.options"
@@ -97,8 +93,7 @@
                     </mat-radio-group>
   
                   </ng-container>
-  
-                  <!-- Validation Error -->
+
                   <div *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched" class="error">
                     <p class="text-danger">This field is required</p>
                   </div>
