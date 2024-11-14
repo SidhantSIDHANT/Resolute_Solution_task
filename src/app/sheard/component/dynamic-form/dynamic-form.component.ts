@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Field } from 'src/app/sheard/model/field';
-import {
-  FormBuilderService,
-} from 'src/app/sheard/service/form-builder.service';
+import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { Field } from '../../model/field';
+import { FormBuilderService } from '../../service/form-builder.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -14,19 +12,51 @@ export class DynamicFormComponent implements OnInit {
   form!: FormGroup;
   fields: Field[] = [];
   successMessage = '';
-  isDisabled : boolean = true;
+  isDisabled = true;
 
-  constructor(private formBuilderService: FormBuilderService) {
+  constructor(private formBuilderService: FormBuilderService) {}
+
+  ngOnInit(): void {
     this.form = this.formBuilderService.createFormGroup(this.fields);
   }
 
-  ngOnInit(): void {}
-
   addField(field: Field) {
-    this.fields.push(field);
-    this.form = this.formBuilderService.createFormGroup(this.fields);
-    this.isDisabled = false;
-    console.log(this.isDisabled)
+    const label = prompt('Enter label for this field:', field.label);
+    if (label) {
+      field.label = label;
+      field.placeholder = label;  // Use label as placeholder
+
+      if (field.type === 'select' || field.type === 'radio' || field.type === 'checkbox') {
+        const optionsString = prompt('Enter options for this field (comma separated):');
+        if (optionsString) {
+          field.options = optionsString.split(',').map((opt) => opt.trim());
+        }
+      }
+
+      this.addValidation(field);
+
+      this.fields.push(field);
+      this.form = this.formBuilderService.createFormGroup(this.fields);
+      this.isDisabled = false;
+    }
+  }
+
+  addValidation(field: Field) {
+    let validators:any = [];
+    if (field.required) {
+      validators.push(Validators.required);
+    }
+    if (field.minLength) {
+      validators.push(Validators.minLength(field.minLength));
+    }
+    if (field.maxLength) {
+      validators.push(Validators.maxLength(field.maxLength));
+    }
+    if (field.pattern) {
+      validators.push(Validators.pattern(field.pattern));
+    }
+
+    this.formBuilderService.addValidatorsToControl(this.form, field.name, validators);
   }
 
   removeField(fieldName: string) {
@@ -34,16 +64,7 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.formBuilderService.createFormGroup(this.fields);
   }
 
-  get formControls(){
-    return this.form.controls;
-  }
-
-  addRadioField(
-    label: string,
-    name: string,
-    options: string[],
-    required: boolean
-  ) {
+  addRadioField(label: string, name: string, options: string[], required: boolean) {
     const radioField: Field = {
       type: 'radio',
       label,
@@ -51,6 +72,9 @@ export class DynamicFormComponent implements OnInit {
       placeholder: '',
       required,
       options,
+      minLength: 0,
+      maxLength: 0,
+      pattern: '',
     };
     this.addField(radioField);
   }
@@ -63,4 +87,14 @@ export class DynamicFormComponent implements OnInit {
       this.successMessage = 'Please fill out all required fields.';
     }
   }
+
+  get formControls() {
+    return this.form.controls;
+  }
+
+  getCheckboxFormArray(field: Field): FormArray {
+    const checkboxes = (field.options ?? []).map(() => new FormControl(false));  // Default value is false (unchecked)
+    return new FormArray(checkboxes);
+  }
+  
 }

@@ -87,7 +87,11 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   deleteUser(user: User): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data : {
+        message : "You are about to delete this user. Do you want to proceed?"
+      }
+    });
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.userService.deleteUser(user.id!);
@@ -100,7 +104,12 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   edit(user: User): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure you want to edit this user?'
+      }
+    });
+    
     dialogRef.afterClosed().subscribe((result : boolean)=>{
       if(result){
         this.editUserEvent.emit(user);

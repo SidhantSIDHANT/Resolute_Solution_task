@@ -23,6 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DynamicFormComponent } from './sheard/component/dynamic-form/dynamic-form.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from './sheard/component/confirmation-dialog/confirmation-dialog.component';
+import { FormBuilderService } from './sheard/service/form-builder.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { ConfirmationDialogComponent } from './sheard/component/confirmation-dia
     MatSnackBarModule  
 
   ],
-  providers: [],
+  providers: [FormBuilderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

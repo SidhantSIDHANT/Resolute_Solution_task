@@ -80,6 +80,7 @@ export class UserFormComponent implements OnInit {
       this.updatedUser = { ...this.userForm.value, id: this.id };
       this.userService.updateUser(this.updatedUser);
       this.userForm.reset();
+      this.isEditMode = false;
     }
   }
 }
