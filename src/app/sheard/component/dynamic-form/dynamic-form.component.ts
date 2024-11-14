@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { Field } from '../../model/field';
 import { FormBuilderService } from '../../service/form-builder.service';
 
@@ -48,7 +48,8 @@ export class DynamicFormComponent implements OnInit {
   }
 
   addValidation(field: Field) {
-    let validators: any = [];
+    let validators: ValidatorFn[] = [];
+    console.log(field)
     if (field.required) {
       validators.push(Validators.required);
     }
