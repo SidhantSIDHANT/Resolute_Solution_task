@@ -3,7 +3,7 @@
     <div class="user-list-container">
 
       <div class="table-wrapper">
-        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="applySort($event)" class="w-100 mt-5">
+        <table mat-table [dataSource]="dataSource.data | sort:sortBy:sortDirection" matSort (matSortChange)="applySort($event)" class="w-100 mt-5">
 
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>

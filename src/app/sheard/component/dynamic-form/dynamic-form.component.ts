@@ -24,10 +24,16 @@ export class DynamicFormComponent implements OnInit {
     const label = prompt('Enter label for this field:', field.label);
     if (label) {
       field.label = label;
-      field.placeholder = label;  // Use label as placeholder
+      field.placeholder = label; // Use label as placeholder
 
-      if (field.type === 'select' || field.type === 'radio' || field.type === 'checkbox') {
-        const optionsString = prompt('Enter options for this field (comma separated):');
+      if (
+        field.type === 'select' ||
+        field.type === 'radio' ||
+        field.type === 'checkbox'
+      ) {
+        const optionsString = prompt(
+          'Enter options for this field (comma separated):'
+        );
         if (optionsString) {
           field.options = optionsString.split(',').map((opt) => opt.trim());
         }
@@ -42,7 +48,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   addValidation(field: Field) {
-    let validators:any = [];
+    let validators: any = [];
     if (field.required) {
       validators.push(Validators.required);
     }
@@ -56,7 +62,11 @@ export class DynamicFormComponent implements OnInit {
       validators.push(Validators.pattern(field.pattern));
     }
 
-    this.formBuilderService.addValidatorsToControl(this.form, field.name, validators);
+    this.formBuilderService.addValidatorsToControl(
+      this.form,
+      field.name,
+      validators
+    );
   }
 
   removeField(fieldName: string) {
@@ -64,7 +74,12 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.formBuilderService.createFormGroup(this.fields);
   }
 
-  addRadioField(label: string, name: string, options: string[], required: boolean) {
+  addRadioField(
+    label: string,
+    name: string,
+    options: string[],
+    required: boolean
+  ) {
     const radioField: Field = {
       type: 'radio',
       label,
@@ -93,8 +108,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   getCheckboxFormArray(field: Field): FormArray {
-    const checkboxes = (field.options ?? []).map(() => new FormControl(false));  // Default value is false (unchecked)
+    const checkboxes = (field.options ?? []).map(() => new FormControl(false)); // Default value is false (unchecked)
     return new FormArray(checkboxes);
   }
-  
 }
