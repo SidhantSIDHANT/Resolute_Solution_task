@@ -50,7 +50,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
           break;
         }
       }
-      this.dataSource.data = [...this.users];  // Update the dataSource after changes
+      this.dataSource.data = [...this.users]; 
     }
   }
 

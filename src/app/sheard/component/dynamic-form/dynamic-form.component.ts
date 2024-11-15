@@ -125,7 +125,6 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.formBuilderService.createFormGroup(this.fields);
   }
 
-  // Submit the form
   submitForm() {
     if (this.form.valid) {
       console.log('Form submitted with values:', this.form.value);
