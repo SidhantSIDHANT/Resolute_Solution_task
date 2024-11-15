@@ -87,7 +87,15 @@
                     </div>
                   </div>
                   <mat-error *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched">
-                    This field is required
+                    <div *ngIf="form.controls[field.name].hasError('atLeastOneChecked')">
+                      At least one checkbox must be selected.
+                    </div>
+                    <div *ngIf="form.controls[field.name].hasError('minCheckboxes')">
+                      You must select at least {{ field.minLength }} checkbox(es).
+                    </div>
+                    <div *ngIf="form.controls[field.name].hasError('maxCheckboxes')">
+                      You can select a maximum of {{ field.maxLength }} checkbox(es).
+                    </div>
                   </mat-error>
                 </div>
 
@@ -95,7 +103,11 @@
                   <label *ngFor="let option of field.options">
                     <input type="radio" formControlName="{{ field.name }}" [value]="option" />{{ option }}
                   </label>
+                  <mat-error *ngIf="form.controls[field.name].invalid && form.controls[field.name].touched">
+                    This field is required.
+                  </mat-error>
                 </div>
+
               </ng-container>
 
               <button class="mb-3" mat-raised-button color="accent" (click)="removeField(field.name)">

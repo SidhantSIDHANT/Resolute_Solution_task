@@ -1,21 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -24,26 +13,20 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'role', 'actions', 'edit'];
-  dataSource: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   users: User[] = [];
-  
-  sortBy: string = 'name';  
-  sortDirection: string = 'asc'; 
 
   @Input() user!: User;
   @Input('updatedUser') updatedUser!: User;
   @Output() editUserEvent: EventEmitter<User> = new EventEmitter<User>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  @ViewChild(MatSort) sort: MatSort | undefined;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource();
-  }
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.users = this.userService.getUsers();
-    this.dataSource.data = this.users;
+    this.dataSource.data = this.users;  
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,7 +38,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
       } else {
         this.users.push(updatedUser);
       }
-      this.dataSource.data = [...this.users];
+      this.dataSource.data = [...this.users];  
     }
 
     if (changes['updatedUser'] && changes['updatedUser'].currentValue) {
@@ -67,7 +50,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
           break;
         }
       }
-      this.dataSource.data = [...this.users];
+      this.dataSource.data = [...this.users];  // Update the dataSource after changes
     }
   }
 
@@ -75,21 +58,29 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
-
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
   }
 
-  applySort(event: any): void {
-    this.sortBy = event.active;
-    this.sortDirection = event.direction;
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    this.dataSource.filter = filterValue;
+  }
+
+  getFilterPredicate(): (data: User, filter: string) => boolean {
+    return (data: User, filter: string): boolean => {
+      const searchTerms = filter.trim().toLowerCase();
+      const name = data.name ? data.name.toLowerCase() : '';
+      const email = data.email ? data.email.toLowerCase() : '';
+      const role = data.role ? data.role.toLowerCase() : '';
+
+      return name.includes(searchTerms) || email.includes(searchTerms) || role.includes(searchTerms);
+    };
   }
 
   deleteUser(user: User): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data : {
-        message : "You are about to delete this user. Do you want to proceed?"
+      data: {
+        message: "You are about to delete this user. Do you want to proceed?"
       }
     });
     dialogRef.afterClosed().subscribe((result: boolean) => {
@@ -110,10 +101,10 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit {
       }
     });
     
-    dialogRef.afterClosed().subscribe((result : boolean)=>{
-      if(result){
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
         this.editUserEvent.emit(user);
-      }else{
+      } else {
         console.log('Edit canceled');
       }
     });
